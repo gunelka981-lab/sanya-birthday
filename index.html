@@ -16,7 +16,10 @@
 
     body {
       font-family: "Manrope", "Segoe UI", Arial, sans-serif;
-      background: radial-gradient(circle at top, #edf6ff 0%, #6f94bd 30%, #101827 78%, #1b0d12 100%);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,75,92,0.22) 0%, transparent 28%),
+        radial-gradient(circle at 82% 8%, rgba(77,166,255,0.35) 0%, transparent 30%),
+        radial-gradient(circle at top, #8db7df 0%, #315982 32%, #101827 74%, #120b12 100%);
       color: #fff;
       min-height: 100vh;
       overflow-x: hidden;
@@ -43,6 +46,7 @@
       animation: floatUp linear infinite;
       font-size: 20px;
       filter: drop-shadow(0 8px 14px rgba(0,0,0,0.25));
+      opacity: 0.72;
     }
 
     .cars {
@@ -79,16 +83,18 @@
       100% { transform: translateY(-110vh) scale(1.6); opacity: 0; }
     }
 
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 44px 22px;
-      position: relative;
-      z-index: 2;
+    .hero {$1z-index: 2;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(7,18,35,0.42), rgba(7,18,35,0.12) 42%, rgba(7,18,35,0.48)),
+        radial-gradient(circle at 50% 38%, rgba(255,255,255,0.16), transparent 36%);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .badge {
@@ -113,10 +119,17 @@
     }
 
     .name {
-      display: block;
-      background: linear-gradient(90deg, #ffffff, #b9dcff, #7bb7ff, #ff4b5c);
+      display: inline-block;
+      margin-top: 8px;
+      padding: 0 14px 10px;
+      background: linear-gradient(90deg, #ffffff 0%, #d7ecff 28%, #80c2ff 60%, #ff4b5c 100%);
       -webkit-background-clip: text;
       color: transparent;
+      letter-spacing: 0.03em;
+      text-shadow: none;
+      filter:
+        drop-shadow(0 0 18px rgba(199,226,255,0.5))
+        drop-shadow(0 16px 26px rgba(0,0,0,0.45));
     }
 
     .subtitle {
@@ -371,6 +384,120 @@
       color: rgba(255,255,255,0.68);
     }
 
+    .confetti-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 50;
+      overflow: hidden;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -20px;
+      width: 10px;
+      height: 18px;
+      border-radius: 4px;
+      animation: confettiFall 2.8s ease-out forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+    }
+
+    .surprise-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,75,92,0.26), transparent 34%),
+        radial-gradient(circle at 50% 70%, rgba(127,193,255,0.28), transparent 38%),
+        rgba(5,10,22,0.88);
+      backdrop-filter: blur(18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.45s ease;
+    }
+
+    .surprise-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .surprise-card {
+      width: min(760px, 100%);
+      text-align: center;
+      border-radius: 38px;
+      padding: clamp(28px, 6vw, 64px);
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08));
+      border: 1px solid rgba(255,255,255,0.26);
+      box-shadow: 0 36px 120px rgba(0,0,0,0.5);
+      transform: scale(0.92) translateY(18px);
+      transition: 0.5s ease;
+    }
+
+    .surprise-overlay.show .surprise-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .surprise-kicker {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(255,75,92,0.18);
+      border: 1px solid rgba(255,75,92,0.35);
+      color: #ffd6dc;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .surprise-card h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: 0.95;
+      margin-bottom: 18px;
+      background: linear-gradient(90deg, #ffffff, #c7e2ff, #ff6b78);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .surprise-card p {
+      .final-title{
+  font-family: "Playfair Display", serif;
+  font-size: clamp(52px, 9vw, 96px);
+  line-height: 0.92;
+  margin-bottom: 26px;
+  color: #ffffff;
+
+  text-shadow:
+    0 0 12px rgba(123,183,255,0.7),
+    0 0 32px rgba(255,75,92,0.35);
+
+  letter-spacing: -0.04em;
+}
+
+.final-text{
+  font-size: clamp(18px, 3vw, 28px);
+  line-height: 1.7;
+  color: rgba(255,255,255,0.92);
+  max-width: 760px;
+  margin: 0 auto 34px;
+}
+      max-width: 560px;
+      margin: 0 auto 28px;
+      font-size: clamp(17px, 3vw, 23px);
+      line-height: 1.45;
+      color: rgba(255,255,255,0.88);
+    }
+
     @media (max-width: 760px) {
       .gallery,
       .reasons {
@@ -399,6 +526,16 @@
     <source src="romantic.mp3" type="audio/mpeg" />
   </audio>
 
+  <div id="confettiLayer" class="confetti-layer"></div>
+  <div id="surpriseOverlay" class="surprise-overlay">
+    <div class="surprise-card">
+      <div class="surprise-kicker">Сюрприз открыт ✨</div>
+      <h2>А теперь можно открывать подарок</h2>
+      <p>С днём рождения, мой любимый. Пусть этот момент запомнится тебе надолго.</p>
+      <button class="music-btn" onclick="closeSurprise()">Вернуться на сайт</button>
+    </div>
+  </div>
+
   <div class="page">
     <div class="hearts" id="hearts"></div>
     <div class="cars" aria-hidden="true">
@@ -409,7 +546,7 @@
 
     <header class="hero">
       <div class="badge">27 мая • день рождения самого любимого человека</div>
-      <h1>С днём рождения, <span class="name">Саня</span></h1>
+      <h1>С днём рождения,<br><span class="name">САНЯ</span></h1>
       <p class="subtitle">
         Этот маленький сайт — для тебя. Про нас, про любовь, про наши взгляды, руки, объятия и те моменты, которые хочется сохранить навсегда.
       </p>
@@ -534,20 +671,21 @@
 
     <section>
       <div class="card">
-        <h2 class="section-title">Нажми сюда</h2>
-        <p class="text">
-          Здесь может быть твой финальный сюрприз.
-          <br><br>
-          Например:
-          <br>
-          — видео-поздравление
-          <br>
-          — фото подарка
-          <br>
-          — скрытое письмо
-          <br>
-          — или кнопка с фразой «теперь можно открывать подарок» 🥹
-        </p>
+        <h2 class="final-title">27 мая ✨</h2>
+
+<p class="final-text">
+Я долго думала, чем тебя удивить.<br><br>
+
+Но потом поняла одну вещь:<br>
+главное — чтобы ты почувствовал,<br>
+как сильно тебя любят.<br><br>
+
+С днём рождения, мой Саня 🤍
+</p>
+
+<button class="music-btn" onclick="showSurprise()">
+✨ Открыть сюрприз
+</button>
 
         <div style="display:flex; justify-content:center; margin-top:32px;">
           <button class="music-btn" onclick="showSurprise()">✨ Открыть сюрприз</button>
@@ -644,12 +782,31 @@
     }
 
     const heartsContainer = document.getElementById('hearts');
-    const symbols = ['🕷️', '🕸️', '🦸‍♂️', '❤️', '💙'];
+    const symbols = ['🕸️', '✦', '✧', '❤️', '💙'];
 
     function showSurprise() {
-      const box = document.getElementById('surpriseBox');
-      box.style.display = 'block';
-      box.scrollIntoView({ behavior: 'smooth' });
+      const overlay = document.getElementById('surpriseOverlay');
+      overlay.classList.add('show');
+      launchConfetti();
+    }
+
+    function closeSurprise() {
+      document.getElementById('surpriseOverlay').classList.remove('show');
+    }
+
+    function launchConfetti() {
+      const layer = document.getElementById('confettiLayer');
+      const colors = ['#ffffff', '#c7e2ff', '#7bb7ff', '#ff4b5c'];
+      for (let i = 0; i < 90; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDelay = Math.random() * 0.6 + 's';
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        layer.appendChild(piece);
+        setTimeout(() => piece.remove(), 3500);
+      }
     }
 
     function createHeart() {
