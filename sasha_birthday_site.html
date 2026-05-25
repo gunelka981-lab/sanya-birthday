@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>С днём рождения, Саня!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top, #edf6ff 0%, #6f94bd 30%, #101827 100%);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      color: rgba(255,255,255,0.75);
+      animation: floatUp linear infinite;
+      font-size: 20px;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.6); opacity: 0; }
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 44px 22px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      padding: 10px 18px;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(46px, 13vw, 118px);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      max-width: 980px;
+      text-shadow: 0 16px 60px rgba(0,0,0,0.45);
+    }
+
+    .name {
+      display: block;
+      background: linear-gradient(90deg, #ffffff, #b9dcff, #7bb7ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      max-width: 680px;
+      margin: 28px auto 0;
+      font-size: clamp(18px, 4.5vw, 28px);
+      line-height: 1.35;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    button, .scroll-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 15px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    .music-btn {
+      color: #0f2438;
+      background: #fff;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.25);
+    }
+
+    .scroll-btn {
+      color: #fff;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.32);
+      backdrop-filter: blur(12px);
+    }
+
+    button:hover, .scroll-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    section {
+      position: relative;
+      z-index: 2;
+      padding: 72px 22px;
+    }
+
+    .card {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      border-radius: 34px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(18px);
+      padding: clamp(24px, 5vw, 52px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.28);
+    }
+
+    .section-title {
+      font-size: clamp(32px, 7vw, 64px);
+      letter-spacing: -0.05em;
+      margin-bottom: 22px;
+    }
+
+    .text {
+      font-size: clamp(17px, 3vw, 24px);
+      line-height: 1.55;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .photo {
+      position: relative;
+      min-height: 260px;
+      border-radius: 26px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.72);
+      text-align: center;
+      padding: 20px;
+      font-weight: 700;
+    }
+
+    .photo img {
+      transition: transform 0.6s ease;
+      filter: contrast(1.03) saturate(1.02);
+    }
+
+    .photo:hover img {
+      transform: scale(1.04);
+    }
+
+    .polaroid {
+      background: #eef6ff;
+      padding: 12px 12px 56px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.28);
+    }
+
+    .polaroid::after {
+      content: 'любимый момент';
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #20364d;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+    }
+
+    .rotate-left {
+      transform: rotate(-2deg);
+    }
+
+    .rotate-right {
+      transform: rotate(2deg);
+    }
+
+    .cinematic img {
+      filter: grayscale(1) contrast(1.08);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo.big {
+      grid-column: span 2;
+    }
+
+    .photo.wide {
+      grid-column: span 3;
+      min-height: 420px;
+    }
+
+    .reasons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .reason {
+      border-radius: 26px;
+      padding: 24px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.19);
+    }
+
+    .reason span {
+      display: block;
+      font-size: 42px;
+      margin-bottom: 14px;
+    }
+
+    .reason p {
+      font-size: 18px;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .final {
+      text-align: center;
+      padding-bottom: 100px;
+    }
+
+    .final .card {
+      background: linear-gradient(135deg, rgba(190,220,255,0.28), rgba(255,255,255,0.08));
+    }
+
+    .signature {
+      margin-top: 30px;
+      font-size: clamp(24px, 6vw, 46px);
+      font-weight: 800;
+      color: #c7e2ff;
+    }
+
+    .audio-note {
+      margin-top: 12px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.68);
+    }
+
+    @media (max-width: 760px) {
+      .gallery,
+      .reasons {
+        grid-template-columns: 1fr;
+      }
+
+      .photo.big,
+      .photo.wide {
+        grid-column: span 1;
+      }
+
+      .photo {
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="birthdayMusic" loop>
+    <!-- Романтичная музыка: положи рядом с этим HTML файл romantic.mp3 -->
+    <source src="romantic.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="page">
+    <div class="hearts" id="hearts"></div>
+
+    <header class="hero">
+      <div class="badge">27 мая • день рождения самого любимого человека</div>
+      <h1>С днём рождения, <span class="name">Саня</span></h1>
+      <p class="subtitle">
+        Этот маленький сайт — для тебя. Про нас, про любовь, про наши взгляды, руки, объятия и те моменты, которые хочется сохранить навсегда.
+      </p>
+      <div class="actions">
+        <button class="music-btn" onclick="toggleMusic()">▶ Включить музыку</button>
+        <a class="scroll-btn" href="#letter">Открыть поздравление</a>
+      </div>
+      <div class="audio-note">Это не просто сайт. Это маленькое письмо для тебя 🤍</div>
+    </header>
+
+    <section id="letter">
+      <div class="card">
+        <h2 class="section-title">Мой любимый</h2>
+        <p class="text">
+          Саня, с днём рождения! Я хочу, чтобы ты знал: ты для меня не просто любимый человек. Ты мой дом, моё спокойствие, моя улыбка в конце любого сложного дня.
+          <br><br>
+          Спасибо тебе за заботу, за нежность, за юмор, за терпение, за наши разговоры, за твоё тепло и за то, что рядом с тобой я чувствую себя любимой. Пусть этот год принесёт тебе силы, здоровье, уверенность, радость, большие победы и много счастливых моментов.
+          <br><br>
+          Я очень люблю тебя. И очень счастлива, что в этой жизни мы нашли друг друга.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title">Это всё про тебя</h2>
+        <p class="text">Этот сайт — маленькое путешествие по твоей жизни. Здесь можно собрать твои детские фотографии, любимые моменты, воспоминания и всё то, что делает тебя тобой.</p>
+        <div class="gallery">
+          <div class="photo big polaroid">
+            <img src="photo_2026-05-25_13-06-01.jpg" alt="Маленький Саня" onerror="this.remove(); this.parentElement.innerHTML='Детское фото';">
+          </div>
+
+          <div class="photo polaroid rotate-left">
+            <img src="photo_2026-05-25_13-05-59 (2).jpg" alt="Малыш Саня" onerror="this.remove(); this.parentElement.innerHTML='Детское фото';">
+          </div>
+
+          <div class="photo polaroid rotate-right">
+            <img src="photo_2026-05-25_13-06-00.jpg" alt="Саня на велосипеде" onerror="this.remove(); this.parentElement.innerHTML='Детское фото';">
+          </div>
+
+          <div class="photo wide cinematic">
+            <img src="photo_2026-05-24_00-29-33(1).jpg" alt="Вы вместе" onerror="this.remove(); this.parentElement.innerHTML='Ваше фото';">
+          </div>
+
+          <div class="photo polaroid rotate-right">
+            <img src="photo_2026-05-25_13-06-00 (2).jpg" alt="Маленький Саня" onerror="this.remove(); this.parentElement.innerHTML='Детское фото';">
+          </div>
+
+          <div class="photo polaroid rotate-left">
+            <img src="photo_2026-05-25_13-05-59.jpg" alt="Маленький Саня" onerror="this.remove(); this.parentElement.innerHTML='Детское фото';">
+          </div>
+
+          <div class="photo big polaroid">
+            <img src="photo_2026-05-25_13-06-00 (3).jpg" alt="Маленький Саня" onerror="this.remove(); this.parentElement.innerHTML='Детское фото';">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title">Немного о тебе</h2>
+        <div class="reasons">
+          <div class="reason">
+            <span>🧸</span>
+            <p>Когда-то ты был маленьким мальчиком. И я бы очень хотела тогда знать, что однажды встречу тебя.</p>
+          </div>
+          <div class="reason">
+            <span>🎂</span>
+            <p>Сегодня твой день. И мне хочется сделать для тебя что-то особенное и очень тёплое.</p>
+          </div>
+          <div class="reason">
+            <span>🤍</span>
+            <p>Пусть у тебя всегда будут силы мечтать, улыбаться и быть счастливым.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title">Нажми сюда</h2>
+        <p class="text">
+          Здесь может быть твой финальный сюрприз.
+          <br><br>
+          Например:
+          <br>
+          — видео-поздравление
+          <br>
+          — фото подарка
+          <br>
+          — скрытое письмо
+          <br>
+          — или кнопка с фразой «теперь можно открывать подарок» 🥹
+        </p>
+
+        <div style="display:flex; justify-content:center; margin-top:32px;">
+          <button class="music-btn" onclick="showSurprise()">✨ Открыть сюрприз</button>
+        </div>
+
+        <div id="surpriseBox" style="display:none; margin-top:28px; text-align:center; font-size:22px; line-height:1.6; color:rgba(255,255,255,0.92);">
+          <p>
+            С днём рождения, мой любимый.<br>
+            А теперь… можно открывать подарок 🎁
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title">За что я тебя люблю</h2>
+        <div class="reasons">
+          <div class="reason">
+            <span>🤍</span>
+            <p>За то, что рядом с тобой спокойно и по-настоящему хорошо.</p>
+          </div>
+          <div class="reason">
+            <span>✨</span>
+            <p>За твою доброту, заботу и умение быть рядом в самые разные моменты.</p>
+          </div>
+          <div class="reason">
+            <span>🫶</span>
+            <p>За то, что ты — это ты. Самый родной, любимый и мой.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="card">
+        <h2 class="section-title">Пусть этот год будет твоим</h2>
+        <p class="text">
+          Я очень хочу, чтобы впереди у тебя было много света, радости, вкусной еды, классных поездок, тёплых вечеров, смешных историй и моментов, которые хочется запомнить навсегда.
+          <br><br>
+          С днём рождения, мой любимый Саня.
+        </p>
+        <div class="signature">Люблю тебя. Твоя Гюша ♡</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const music = document.getElementById('birthdayMusic');
+    const btn = document.querySelector('.music-btn');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (!isPlaying) {
+        music.play();
+        btn.textContent = '⏸ Выключить музыку';
+        isPlaying = true;
+      } else {
+        music.pause();
+        btn.textContent = '▶ Включить музыку';
+        isPlaying = false;
+      }
+    }
+
+    const heartsContainer = document.getElementById('hearts');
+    const symbols = ['♡', '♥', '✨', '🤍', '🕯️'];
+
+    function showSurprise() {
+      const box = document.getElementById('surpriseBox');
+      box.style.display = 'block';
+      box.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 5 + Math.random() * 6 + 's';
+      heart.style.fontSize = 14 + Math.random() * 24 + 'px';
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 11000);
+    }
+
+    setInterval(createHeart, 420);
+  </script>
+</body>
+</html>
