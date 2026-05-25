@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>С днём рождения, Саня!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Manrope", "Segoe UI", Arial, sans-serif;
+      background: radial-gradient(circle at top, #edf6ff 0%, #6f94bd 30%, #101827 78%, #1b0d12 100%);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      color: rgba(255,255,255,0.75);
+      animation: floatUp linear infinite;
+      font-size: 20px;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.25));
+    }
+
+    .cars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 3;
+    }
+
+    .car {
+      position: absolute;
+      left: -90px;
+      font-size: 34px;
+      opacity: 0.9;
+      filter: drop-shadow(0 10px 16px rgba(0,0,0,0.35));
+      animation: drive linear infinite;
+    }
+
+    .car1 { bottom: 22px; animation-duration: 13s; }
+    .car2 { bottom: 58px; animation-duration: 18s; animation-delay: 3s; }
+    .car3 { bottom: 96px; animation-duration: 22s; animation-delay: 7s; }
+
+    @keyframes drive {
+      0% { transform: translateX(-120px) scaleX(1); }
+      49% { transform: translateX(calc(100vw + 120px)) scaleX(1); }
+      50% { transform: translateX(calc(100vw + 120px)) scaleX(-1); }
+      100% { transform: translateX(-120px) scaleX(-1); }
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.6); opacity: 0; }
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 44px 22px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      padding: 10px 18px;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(54px, 14vw, 132px);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+      max-width: 980px;
+      text-shadow: 0 18px 70px rgba(0,0,0,0.5);
+    }
+
+    .name {
+      display: block;
+      background: linear-gradient(90deg, #ffffff, #b9dcff, #7bb7ff, #ff4b5c);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      max-width: 680px;
+      margin: 28px auto 0;
+      font-size: clamp(18px, 4.5vw, 28px);
+      line-height: 1.35;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    button, .scroll-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 15px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    .music-btn {
+      color: #0f2438;
+      background: linear-gradient(135deg, #ffffff, #d7ecff, #ffd2d8);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.25);
+    }
+
+    .scroll-btn {
+      color: #fff;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.32);
+      backdrop-filter: blur(12px);
+    }
+
+    button:hover, .scroll-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    section {
+      position: relative;
+      z-index: 2;
+      padding: 72px 22px;
+    }
+
+    .card {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      border-radius: 34px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(18px);
+      padding: clamp(24px, 5vw, 52px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.28);
+    }
+
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(38px, 8vw, 76px);
+      letter-spacing: -0.04em;
+      margin-bottom: 22px;
+      background: linear-gradient(90deg, #ffffff, #c9e6ff, #72b7ff);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 14px 50px rgba(53,133,220,0.18);
+    }
+
+    .text {
+      font-size: clamp(17px, 3vw, 24px);
+      line-height: 1.55;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .gallery {
+      display: none;
+    }
+
+    .slider-wrap {
+      margin-top: 34px;
+      position: relative;
+    }
+
+    .slider {
+      position: relative;
+      min-height: 620px;
+      border-radius: 38px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: 0 34px 90px rgba(0,0,0,0.32);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 0.9s ease, transform 1.2s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 2;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.04) saturate(1.03);
+    }
+
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(16,24,39,0.05), rgba(16,24,39,0.78));
+    }
+
+    .slide-caption {
+      position: absolute;
+      left: clamp(22px, 5vw, 52px);
+      right: clamp(22px, 5vw, 52px);
+      bottom: clamp(24px, 5vw, 54px);
+      z-index: 4;
+    }
+
+    .slide-caption .year {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.28);
+      backdrop-filter: blur(12px);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .slide-caption h3 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(32px, 6vw, 68px);
+      line-height: 0.98;
+      margin-bottom: 12px;
+      color: #fff;
+      text-shadow: 0 12px 44px rgba(0,0,0,0.42);
+    }
+
+    .slide-caption p {
+      max-width: 680px;
+      font-size: clamp(16px, 2.5vw, 22px);
+      line-height: 1.45;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .slider-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .slider-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      padding: 0;
+      background: rgba(255,255,255,0.18);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.28);
+      backdrop-filter: blur(12px);
+      font-size: 24px;
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.36);
+      transition: 0.25s ease;
+    }
+
+    .dot.active {
+      width: 34px;
+      background: linear-gradient(90deg, #c7e2ff, #ff4b5c);
+    }
+
+    .reasons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .reason {
+      border-radius: 26px;
+      padding: 24px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.19);
+      box-shadow: inset 0 0 0 1px rgba(255,75,92,0.08);
+    }
+
+    .reason span {
+      display: block;
+      font-size: 42px;
+      margin-bottom: 14px;
+    }
+
+    .reason p {
+      font-size: 18px;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .final {
+      text-align: center;
+      padding-bottom: 100px;
+    }
+
+    .final .card {
+      background: linear-gradient(135deg, rgba(190,220,255,0.28), rgba(255,255,255,0.08));
+    }
+
+    .signature {
+      margin-top: 30px;
+      font-size: clamp(24px, 6vw, 46px);
+      font-weight: 800;
+      color: #c7e2ff;
+    }
+
+    .audio-note {
+      margin-top: 12px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.68);
+    }
+
+    @media (max-width: 760px) {
+      .gallery,
+      .reasons {
+        grid-template-columns: 1fr;
+      }
+
+      .photo.big,
+      .photo.wide {
+        grid-column: span 1;
+      }
+
+      .photo {
+        min-height: 320px;
+      }
+
+      .slider {
+        min-height: 560px;
+        border-radius: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="birthdayMusic" loop>
+    <!-- Романтичная музыка: положи рядом с этим HTML файл romantic.mp3 -->
+    <source src="romantic.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="page">
+    <div class="hearts" id="hearts"></div>
+    <div class="cars" aria-hidden="true">
+      <div class="car car1">🏎️</div>
+      <div class="car car2">🚗</div>
+      <div class="car car3">🚙</div>
+    </div>
+
+    <header class="hero">
+      <div class="badge">27 мая • день рождения самого любимого человека</div>
+      <h1>С днём рождения, <span class="name">Саня</span></h1>
+      <p class="subtitle">
+        Этот маленький сайт — для тебя. Про нас, про любовь, про наши взгляды, руки, объятия и те моменты, которые хочется сохранить навсегда.
+      </p>
+      <div class="actions">
+        <button class="music-btn" onclick="toggleMusic()">▶ Включить музыку</button>
+        <a class="scroll-btn" href="#letter">Открыть поздравление</a>
+      </div>
+      <div class="audio-note">Это не просто сайт. Это маленькое письмо для тебя 🤍</div>
+    </header>
+
+    <section id="letter">
+      <div class="card">
+        <h2 class="section-title">Мой любимый</h2>
+        <p class="text">
+          Саня, с днём рождения! Я хочу, чтобы ты знал: ты для меня не просто любимый человек. Ты мой дом, моё спокойствие, моя улыбка в конце любого сложного дня.
+          <br><br>
+          Спасибо тебе за заботу, за нежность, за юмор, за терпение, за наши разговоры, за твоё тепло и за то, что рядом с тобой я чувствую себя любимой. Пусть этот год принесёт тебе силы, здоровье, уверенность, радость, большие победы и много счастливых моментов.
+          <br><br>
+          Я очень люблю тебя. И очень счастлива, что в этой жизни мы нашли друг друга.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title">Это всё про тебя</h2>
+        <p class="text">Этот сайт — маленькое путешествие по твоей жизни. Здесь можно собрать твои детские фотографии, любимые моменты, воспоминания и всё то, что делает тебя тобой.</p>
+        <div class="slider-wrap">
+          <div class="slider" id="photoSlider">
+            <div class="slide active">
+              <img src="photo_2026-05-25_13-06-01.jpg" alt="Маленький Саня">
+              <div class="slide-caption">
+                <span class="year">глава 1</span>
+                <h3>С этого маленького мальчика всё началось</h3>
+                <p>Когда-то ты просто смотрел на мир большими глазами. А теперь ты стал человеком, которого я люблю всем сердцем.</p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img src="photo_2026-05-25_13-05-59 (2).jpg" alt="Малыш Саня">
+              <div class="slide-caption">
+                <span class="year">глава 2</span>
+                <h3>Самая милая улыбка</h3>
+                <p>Смотришь на это фото — и невозможно не улыбнуться в ответ.</p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img src="photo_2026-05-25_13-06-00.jpg" alt="Саня на велосипеде">
+              <div class="slide-caption">
+                <span class="year">глава 3</span>
+                <h3>Маленький герой</h3>
+                <p>Уже тогда было видно: у тебя внутри много света, энергии и жизни.</p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img src="photo_2026-05-25_13-06-00 (2).jpg" alt="Маленький Саня">
+              <div class="slide-caption">
+                <span class="year">глава 4</span>
+                <h3>Тот самый взгляд</h3>
+                <p>Взгляд человека, который явно что-то задумал. И, кажется, уже тогда был очень харизматичным.</p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img src="photo_2026-05-25_13-05-59.jpg" alt="Маленький Саня">
+              <div class="slide-caption">
+                <span class="year">глава 5</span>
+                <h3>Такой настоящий</h3>
+                <p>Фото из детства всегда особенные: в них столько тепла, дома и настоящей жизни.</p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img src="photo_2026-05-25_13-06-00 (3).jpg" alt="Маленький Саня">
+              <div class="slide-caption">
+                <span class="year">глава 6</span>
+                <h3>Маленький Саня, который вырос</h3>
+                <p>И стал моим любимым человеком.</p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img src="photo_2026-05-24_00-29-33.jpg" alt="Мы вместе">
+              <div class="slide-caption">
+                <span class="year">сегодня</span>
+                <h3>А потом в твоей истории появилась я</h3>
+                <p>И я очень счастлива быть рядом. Любить тебя, поддерживать и идти с тобой дальше.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slider-controls">
+            <button class="slider-btn" onclick="prevSlide()">‹</button>
+            <button class="slider-btn" onclick="nextSlide()">›</button>
+          </div>
+          <div class="dots" id="sliderDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title">Немного о тебе</h2>
+        <div class="reasons">
+          <div class="reason">
+            <span>🧸</span>
+            <p>Когда-то ты был маленьким мальчиком. И я бы очень хотела тогда знать, что однажды встречу тебя.</p>
+          </div>
+          <div class="reason">
+            <span>🎂</span>
+            <p>Сегодня твой день. И мне хочется сделать для тебя что-то особенное и очень тёплое.</p>
+          </div>
+          <div class="reason">
+            <span>🤍</span>
+            <p>Пусть у тебя всегда будут силы мечтать, улыбаться и быть счастливым.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title">Нажми сюда</h2>
+        <p class="text">
+          Здесь может быть твой финальный сюрприз.
+          <br><br>
+          Например:
+          <br>
+          — видео-поздравление
+          <br>
+          — фото подарка
+          <br>
+          — скрытое письмо
+          <br>
+          — или кнопка с фразой «теперь можно открывать подарок» 🥹
+        </p>
+
+        <div style="display:flex; justify-content:center; margin-top:32px;">
+          <button class="music-btn" onclick="showSurprise()">✨ Открыть сюрприз</button>
+        </div>
+
+        <div id="surpriseBox" style="display:none; margin-top:28px; text-align:center; font-size:22px; line-height:1.6; color:rgba(255,255,255,0.92);">
+          <p>
+            С днём рождения, мой любимый.<br>
+            А теперь… можно открывать подарок 🎁
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2 class="section-title">За что я тебя люблю</h2>
+        <div class="reasons">
+          <div class="reason">
+            <span>🤍</span>
+            <p>За то, что рядом с тобой спокойно и по-настоящему хорошо.</p>
+          </div>
+          <div class="reason">
+            <span>✨</span>
+            <p>За твою доброту, заботу и умение быть рядом в самые разные моменты.</p>
+          </div>
+          <div class="reason">
+            <span>🫶</span>
+            <p>За то, что ты — это ты. Самый родной, любимый и мой.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="card">
+        <h2 class="section-title">Пусть этот год будет твоим</h2>
+        <p class="text">
+          Я очень хочу, чтобы впереди у тебя было много света, радости, вкусной еды, классных поездок, тёплых вечеров, смешных историй и моментов, которые хочется запомнить навсегда.
+          <br><br>
+          С днём рождения, мой любимый Саня.
+        </p>
+        <div class="signature">Люблю тебя. Твоя Гюша ♡</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('sliderDots');
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.className = index === 0 ? 'dot active' : 'dot';
+      dot.onclick = () => showSlide(index);
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    setInterval(nextSlide, 5200);
+
+    const music = document.getElementById('birthdayMusic');
+    const btn = document.querySelector('.music-btn');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (!isPlaying) {
+        music.play();
+        btn.textContent = '⏸ Выключить музыку';
+        isPlaying = true;
+      } else {
+        music.pause();
+        btn.textContent = '▶ Включить музыку';
+        isPlaying = false;
+      }
+    }
+
+    const heartsContainer = document.getElementById('hearts');
+    const symbols = ['🕷️', '🕸️', '🦸‍♂️', '❤️', '💙'];
+
+    function showSurprise() {
+      const box = document.getElementById('surpriseBox');
+      box.style.display = 'block';
+      box.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 5 + Math.random() * 6 + 's';
+      heart.style.fontSize = 14 + Math.random() * 24 + 'px';
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 11000);
+    }
+
+    setInterval(createHeart, 520);
+  </script>
+</body>
+</html>
